@@ -1,5 +1,7 @@
 const express = require('express')
 const {stu} = require('../model/student')
+const jwt = require('jsonwebtoken')
+const jwt_secret = "himnshu"
 
 let createStudent = async function(req,res){
     let data = req.body;
@@ -11,12 +13,13 @@ let createStudent = async function(req,res){
 const login = async(req,res) =>{
     try{
         let data = req.body
+        console.log(data)
         let {email, USN} = data;
         
         if(!email || !USN){
             res.status(404).send({msg: "Student not found!"})
         }
-        let checkStudent = await studentModel.findOne({USN:USN})
+        let checkStudent = await stu.findOne({USN:USN})
         if(!checkStudent) { res.status(404)
             .send({msg: "Student is not registered"})}
         const token = jwt.sign({USN:USN} , jwt_secret , {expiresIn:'1h'}
@@ -31,4 +34,4 @@ const login = async(req,res) =>{
     });
     }
 }
-module.exports = {createStudent}
+module.exports = {createStudent , login}
