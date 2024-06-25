@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const jwt_secret = "TCE"
+const jwt_secret = "himanshu"
 
 const authorization = async(req,res,next)=>{
     try{
